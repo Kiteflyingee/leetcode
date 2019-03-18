@@ -14,8 +14,8 @@ def divide(arr, start, end):
     '''
     定位基准点，切分array为大小两半
     '''
+    # 定义基准点指针
     key = start 
-    arr[key] = arr[key]
     while start < end:
         while start<end and arr[key]<=arr[end]:
             end -= 1
