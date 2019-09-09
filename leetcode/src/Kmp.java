@@ -56,18 +56,18 @@ public class Kmp {
 		int len = 0; // 记录当前子串的最长公共前后缀的长度
 		int i = 1;
 		prefixTable[0] = -1;
-		while (i < pattern.length() - 1) {
+		while (i < pattern.length() - 1) { // 这里不需要计算本身的最长匹配前后缀
 			if (pattern.charAt(i) == pattern.charAt(len)) {
-				// 如果当前字符匹配成功，则最长公共前缀加一，并计算模式串的下一个子串
+				// 新字符与上次前缀的后一个字符匹配，公共前缀的长度加一
 				len++;
-				prefixTable[i + 1] = len;
+				prefixTable[i + 1] = len; // 这里为了不需要移位，将前缀表中的i+1的元素对应原始pattern的第i+1个子串（i从0开始）
 				i++;
 			} else {
-				// 如果当前字符匹配失败，如果len存在大于0 的话，将len跳转到最长公共前缀的起点
-				if (len > 0) {
-					len = prefixTable[len];
+				if (len > 0) { // 不匹配且前面一个子串具有公共前后缀存在
+					len = prefixTable[len]; // 这里比较关键，将最长公共前缀的位置移到prefixTable[len]
 				} else {
-					prefixTable[i + 1] = len;
+					// 不匹配，且前面的子串没有公共前后缀，那么prefixTable[i+1]必然为0
+					prefixTable[i + 1] = 0;
 					i++;
 				}
 			}
